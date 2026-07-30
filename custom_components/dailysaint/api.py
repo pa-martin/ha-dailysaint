@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import logging
 import re
+from dataclasses import dataclass
 from typing import Any
 
 from aiohttp import ClientError, ClientSession
@@ -20,6 +20,14 @@ FETE_DU_JOUR_DATA_URL = "https://fetedujour.fr/api/v2/{api_key}/json"
 
 _IP_PATTERN = re.compile(r"([0-9]+(?:\.[0-9]+){3})")
 _KEY_PATTERN = re.compile(r"Voici votre clé\s*:.*?>\s*([A-Za-z0-9]+)\s*<", re.DOTALL)
+
+FAKE_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/138.0.0.0 Safari/537.36"
+    )
+}
 
 
 @dataclass(slots=True)
@@ -85,7 +93,7 @@ class DailySaintApi:
     async def _async_fetch_fete_du_jour_data(self, api_key: str) -> SaintData:
         """Fetch saint data from Fête du jour using an API key."""
         url = FETE_DU_JOUR_DATA_URL.format(api_key=api_key)
-        async with self._session.get(url) as response:
+        async with self._session.get(url, headers=FAKE_HEADERS) as response:
             response.raise_for_status()
             payload: dict[str, Any] = await response.json()
 
@@ -113,7 +121,9 @@ class DailySaintApi:
         if ip_match is None:
             raise ValueError("Unable to extract public IP for Fête du jour key request")
 
-        async with self._session.post(FETE_DU_JOUR_KEY_URL, data={"ip": ip_match.group(1)}) as response:
+        async with self._session.post(
+            FETE_DU_JOUR_KEY_URL, data={"ip": ip_match.group(1)}, headers=FAKE_HEADERS
+        ) as response:
             response.raise_for_status()
             key_content = await response.text()
 
