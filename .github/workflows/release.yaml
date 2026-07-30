@@ -1,0 +1,60 @@
+name: "Release"
+
+on:
+  push:
+    branches:
+      - "main"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: "Release"
+    if: startsWith(github.event.head_commit.message, 'chore(release):')
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout the repository"
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: "Read version"
+        id: version
+        run: |
+          VERSION=$(python3 -c "
+          import json
+
+          with open(
+              'custom_components/dailysaint/manifest.json',
+              encoding='utf-8',
+          ) as file:
+              print(json.load(file)['version'])
+          ")
+
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: "Create Git tag"
+        run: |
+          git tag "v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: "Create ZIP archive"
+        run: |
+          cd custom_components/dailysaint
+
+          zip -r \
+            "${{ github.workspace }}/ha_dailysaint.zip" \
+            ./
+
+      - name: "Create GitHub Release"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create \
+            "v${{ steps.version.outputs.version }}" \
+            --title "Daily Saint v${{ steps.version.outputs.version }}" \
+            --generate-notes \
+            --target main \
+            "${{ github.workspace }}/ha_dailysaint.zip"
