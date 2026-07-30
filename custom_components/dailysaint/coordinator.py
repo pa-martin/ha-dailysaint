@@ -36,7 +36,8 @@ class DailySaintCoordinator(DataUpdateCoordinator[dict[str, SaintData]]):
     def providers(self) -> list[str]:
         """Return configured providers."""
         providers = self.config_entry.options.get(
-            CONF_PROVIDERS, self.config_entry.data.get(CONF_PROVIDERS, DEFAULT_PROVIDERS)
+            CONF_PROVIDERS,
+            self.config_entry.data.get(CONF_PROVIDERS, DEFAULT_PROVIDERS),
         )
         return list(providers)
 
