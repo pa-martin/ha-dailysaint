@@ -69,8 +69,12 @@ class DailySaintApi:
         query = root.get("query", {})
         saint = root.get("saintdujour", {})
 
+        name = saint.get("nom")
+        if not isinstance(name, str) or not name:
+            raise ValueError("Nominis response did not contain a valid saint name")
+
         return SaintData(
-            name=saint.get("nom", ""),
+            name=name,
             source=PROVIDER_NOMINIS,
             description=saint.get("description"),
             link=saint.get("lien"),

@@ -85,7 +85,7 @@ class DailySaintOptionsFlow(OptionsFlow):
                         identifiers={(DOMAIN, provider)}
                     )
                     if device and provider not in providers:
-                        # And then, we remove it thanks to it's id
+                        # And then, we remove it thanks to its id
                         device_registry.async_update_device(
                             device_id=device.id,
                             remove_config_entry_id=self.config_entry.entry_id,

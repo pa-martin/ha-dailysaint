@@ -1,4 +1,4 @@
-# Actions automatique
+# Actions automatiques
 
 Des hooks Git doivent être installés avant de commit des modifications. Ces hooks s'installent avec la commande :
 
