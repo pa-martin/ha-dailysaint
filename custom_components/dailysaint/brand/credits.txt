@@ -1,0 +1,9 @@
+Made by @pa-martin using https://www.photopea.com/
+
+Icon
+hands-pray by Colton Wiscombe from Material Design Icons (https://pictogrammers.com/library/mdi/icon/hands-pray/)
+Color : #58b9ed
+
+Logo
+Font : Fleur de Leah
+Color : Gradient from #58b9ed to white / black
