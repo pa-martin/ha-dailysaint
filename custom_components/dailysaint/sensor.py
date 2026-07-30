@@ -12,19 +12,23 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .coordinator import DailySaintCoordinator
 from .const import CONF_PROVIDERS, DEFAULT_PROVIDERS, DOMAIN, PROVIDER_NAMES
+from .coordinator import DailySaintCoordinator
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,
+    _hass: HomeAssistant,
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Daily Saint sensors based on config entry."""
     coordinator: DailySaintCoordinator = entry.runtime_data
-    providers = entry.options.get(CONF_PROVIDERS, entry.data.get(CONF_PROVIDERS, DEFAULT_PROVIDERS))
-    async_add_entities([DailySaintSensor(coordinator, entry, provider) for provider in providers])
+    providers = entry.options.get(
+        CONF_PROVIDERS, entry.data.get(CONF_PROVIDERS, DEFAULT_PROVIDERS)
+    )
+    async_add_entities(
+        [DailySaintSensor(coordinator, entry, provider) for provider in providers]
+    )
 
 
 class DailySaintSensor(CoordinatorEntity[DailySaintCoordinator], SensorEntity):
@@ -34,7 +38,9 @@ class DailySaintSensor(CoordinatorEntity[DailySaintCoordinator], SensorEntity):
     _attr_translation_key = "saint_of_the_day"
     _attr_icon = "mdi:cross"
 
-    def __init__(self, coordinator: DailySaintCoordinator, entry: ConfigEntry, provider: str) -> None:
+    def __init__(
+        self, coordinator: DailySaintCoordinator, entry: ConfigEntry, provider: str
+    ) -> None:
         """Initialize sensor entity."""
         super().__init__(coordinator)
         self._provider = provider
