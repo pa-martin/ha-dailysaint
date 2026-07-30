@@ -1,0 +1,40 @@
+{
+  "config": {
+    "abort": {
+      "single_instance_allowed": "Only one configuration of Daily Saint is allowed."
+    },
+    "error": {
+      "no_provider": "Select at least one provider."
+    },
+    "step": {
+      "user": {
+        "title": "Daily Saint",
+        "description": "Choose providers for saint of the day sensors.",
+        "data": {
+          "providers": "Providers"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "no_provider": "Select at least one provider."
+    },
+    "step": {
+      "init": {
+        "title": "Daily Saint",
+        "description": "Update enabled providers.",
+        "data": {
+          "providers": "Providers"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "saint_of_the_day": {
+        "name": "Saint of the day"
+      }
+    }
+  }
+}

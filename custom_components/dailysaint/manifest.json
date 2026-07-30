@@ -1,0 +1,16 @@
+{
+  "domain": "dailysaint",
+  "name": "Daily Saint",
+  "codeowners": [
+    "@pa-martin"
+  ],
+  "config_flow": true,
+  "single_config_entry": true,
+  "documentation": "https://github.com/pa-martin/ha-dailysaint",
+  "iot_class": "cloud_polling",
+  "loggers": [
+    "custom_components.dailysaint"
+  ],
+  "requirements": [],
+  "version": "0.1.0"
+}

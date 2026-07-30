@@ -1,0 +1,40 @@
+{
+  "config": {
+    "abort": {
+      "single_instance_allowed": "Une seule configuration de Daily Saint est autorisée."
+    },
+    "error": {
+      "no_provider": "Sélectionnez au moins une source."
+    },
+    "step": {
+      "user": {
+        "title": "Daily Saint",
+        "description": "Choisissez les sites à intégrer pour les capteurs du saint du jour.",
+        "data": {
+          "providers": "Sites"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "no_provider": "Sélectionnez au moins une source."
+    },
+    "step": {
+      "init": {
+        "title": "Daily Saint",
+        "description": "Mettez à jour les sites activés.",
+        "data": {
+          "providers": "Sites"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "saint_of_the_day": {
+        "name": "Saint du jour"
+      }
+    }
+  }
+}
